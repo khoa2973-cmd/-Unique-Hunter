@@ -121,7 +121,7 @@ local function refresh()
 end
 
 addBtn.MouseButton1Click:Connect(function()
-    local name = unitBox.Text:gsub("^%s+",""):gsub("%s+$","")
+    local name = unitBox.Text:gsub("^%s+"," "):gsub("%s+$","")
     if name == "" then status.Text = "Type a unit name first."; return end
     for _,u in ipairs(data.units) do if u.name == name then data.selected = name; unitBox.Text = ""; refresh(); saveData(); status.Text = "Selected existing unit."; return end end
     table.insert(data.units,{name=name}); data.selected = name; unitBox.Text = ""; refresh(); saveData(); status.Text = "Unit added."
@@ -133,8 +133,8 @@ unitPicker.MouseButton1Click:Connect(function()
 end)
 saveBtn.MouseButton1Click:Connect(function()
     if not data.selected then status.Text = "Add/select a unit first."; return end
-    local before = beforeBox.Text:gsub("^%s+",""):gsub("%s+$","")
-    local after = afterBox.Text:gsub("^%s+",""):gsub("%s+$","")
+    local before = beforeBox.Text:gsub("^%s+"," "):gsub("%s+$","")
+    local after = afterBox.Text:gsub("^%s+"," "):gsub("%s+$","")
     if before == "" or after == "" then status.Text = "Fill both trait fields."; return end
     table.insert(data.history,{unit=data.selected,before=before,after=after,time=os.date("%Y-%m-%d %H:%M:%S")})
     beforeBox.Text = ""; afterBox.Text = ""; refresh()
